@@ -1,0 +1,18 @@
+{
+  "total_owned": {
+    "BTCUSDT": 0.0969204,
+    "ETHUSDT": 5.7200999999999995,
+    "ADAUSDT": 7828.3,
+    "ADAUSDC": 482.38,
+    "XRPUSDT": 131.791,
+    "USDT": 2529.0
+  },
+  "avg_cost": {
+    "BTCUSDT": 88855.81463,
+    "ETHUSDT": 2689.50006,
+    "ADAUSDT": 0.80746,
+    "ADAUSDC": 0.8472,
+    "XRPUSDT": 2.54,
+    "USDT": 1.0
+  }
+}
