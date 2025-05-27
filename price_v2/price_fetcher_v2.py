@@ -7,6 +7,29 @@ from tkinter import ttk
 # Fixed Variables
 SAVE_FILE = "assets_data.json"
 DEFAULT_W, DEFAULT_H = 600, 300
+asset_data = {}
+
+def fetch_single_prices(asset_data):
+    if not asset_data:
+        show_custom_messagebox(DEFAULT_W, DEFAULT_H, "No Assets", "⚠️ No assets to fetch prices for.", "red")
+        return
+
+    price_log = "📈 Current Market Prices:\n\n"
+    for key in asset_data:
+        symbol = f"{key}USDT"
+        url = f"https://api.binance.com/api/v3/ticker/price?symbol={symbol}"
+        try:
+            response = requests.get(url)
+            data = response.json()
+            if 'price' in data:
+                price = float(data['price'])
+                price_log += f"{key}/USDT = {price:.4f} USD\n"
+            else:
+                price_log += f"{key}/USDT = ❌ Price not available\n"
+        except Exception as e:
+            price_log += f"{key}/USDT = ❌ Error fetching price\n"
+
+    show_custom_messagebox(600, 500, "Price Info", price_log, "blue")
 
 # Fetch symbol data
 def fetch_valid_symbols():
@@ -287,7 +310,8 @@ def main():
     dist_button = tk.Button(button_frame, text="Asset Distribution", font=("Arial", 14), width=20, command=lambda: show_page(distribution_page))
     dist_button.grid(row=0, column=0, padx=10)
 
-    price_button = tk.Button(button_frame, text="Price Fetcher", font=("Arial", 14), width=20, command=lambda: show_page(price_fetcher_page))
+    price_button = tk.Button(button_frame, text="Price Fetcher", font=("Arial", 14), width=20,
+        command=lambda: [show_page(price_fetcher_page), fetch_single_prices(asset_data)])
     price_button.grid(row=0, column=1, padx=10)
 
     show_page(distribution_page)
